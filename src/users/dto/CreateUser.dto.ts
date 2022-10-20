@@ -1,18 +1,32 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
-  @ApiProperty()
+  @ApiProperty({
+    required: true,
+  })
   mobileNumber: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    default: 'Normal',
+    required: false,
+  })
   userHealthStatus: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    default: false,
+    required: false,
+  })
   isVerified: string;
 
-  @ApiProperty()
-  createdAt: string;
+  @ApiProperty({
+    default: Date.now(),
+    required: false,
+  })
+  createdAt: Date;
 
-  @ApiProperty()
+  @ApiProperty({
+    default: 'Member',
+    required: false,
+  })
   userType: string;
 }
