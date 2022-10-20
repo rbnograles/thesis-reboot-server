@@ -1,3 +1,5 @@
+# JuanBreath Server Reboot
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -24,7 +26,8 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is the JuanBreath server reboot, the goal of this project is to transfer and improve the
+contact tracing application code and implement a new framework for the server.
 
 ## Installation
 
