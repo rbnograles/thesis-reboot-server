@@ -15,7 +15,7 @@ export class User {
   isVerified: boolean;
 
   @Prop({ default: Date.now(), required: false })
-  createdAt: Date;
+  createdAt: number;
 
   @Prop({ default: 'Member' })
   userType: string;
