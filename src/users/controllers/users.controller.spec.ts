@@ -1,4 +1,4 @@
-import { UserService } from './../services/user.service';
+import { UserService } from '../services/users.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import mongoose from 'mongoose';
