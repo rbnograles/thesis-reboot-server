@@ -24,7 +24,7 @@ export class CreateUserDto {
     default: Date.now(),
     required: false,
   })
-  createdAt: string;
+  createdAt: number;
 
   @ApiProperty({
     default: 'Member',
