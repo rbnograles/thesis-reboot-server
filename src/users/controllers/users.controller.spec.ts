@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { User } from '../schemas/user.schema';
 import { UsersController } from './users.controller';
 
 describe('UsersController', () => {
@@ -16,7 +17,7 @@ describe('UsersController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should return hello world', () => {
-    expect(controller.getUsers()).toEqual({ msg: `Hello World!` });
+  it('should return all user regardless of their user types', () => {
+    expect(controller.getUsers()).toEqual([]);
   });
 });

@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsBoolean, IsNotEmpty } from 'class-validator';
 export class CreateUserDto {
-  @IsNotEmpty({ message: 'Mobile number should not be empty' })
   @ApiProperty({
     required: true,
   })
+  @IsNotEmpty({ message: 'Mobile number should not be empty' })
   mobileNumber: string;
 
   @ApiProperty({
@@ -17,13 +17,14 @@ export class CreateUserDto {
     default: false,
     required: false,
   })
+  @IsBoolean({ message: 'Is verified must be a boolean' })
   isVerified: boolean;
 
   @ApiProperty({
     default: Date.now(),
     required: false,
   })
-  createdAt: Date;
+  createdAt: string;
 
   @ApiProperty({
     default: 'Member',

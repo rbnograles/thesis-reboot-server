@@ -8,16 +8,16 @@ export class User {
   @Prop({ required: true })
   mobileNumber: string;
 
-  @Prop()
+  @Prop({ default: 'Normal' })
   userHealthStatus: string;
 
-  @Prop()
+  @Prop({ default: false })
   isVerified: boolean;
 
-  @Prop()
+  @Prop({ default: Date.now(), required: false })
   createdAt: Date;
 
-  @Prop()
+  @Prop({ default: 'Member' })
   userType: string;
 }
 
