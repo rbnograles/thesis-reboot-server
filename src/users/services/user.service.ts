@@ -9,6 +9,17 @@ export class UserService {
   // inject user model into service
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
+  createOneUserAccount = async (data: CreateUserDto): Promise<User> => {
+    const isUserExisting = await this.userModel.findOne({
+      mobileNumber: data.mobileNumber,
+    });
+    console.log(isUserExisting);
+    if (isUserExisting !== null)
+      throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
+
+    return await this.userModel.create(data);
+  };
+
   fetchUsers = async (): Promise<Array<User>> => {
     return await this.userModel.find().sort({ createdAt: 1 });
   };
@@ -19,16 +30,5 @@ export class UserService {
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
-  };
-
-  createOneUserAccount = async (data: CreateUserDto): Promise<User> => {
-    const isUserExisting = await this.userModel.findOne({
-      mobileNumber: data.mobileNumber,
-    });
-    console.log(isUserExisting);
-    if (isUserExisting !== null)
-      throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
-
-    return await this.userModel.create(data);
   };
 }
