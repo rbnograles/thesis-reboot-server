@@ -6,7 +6,6 @@ import {
   HttpStatus,
   Param,
   Post,
-  Res,
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { User } from '../schemas/user.schema';
