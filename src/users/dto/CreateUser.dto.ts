@@ -16,7 +16,7 @@ export class CreateUserDto {
     default: false,
     required: false,
   })
-  isVerified: string;
+  isVerified: boolean;
 
   @ApiProperty({
     default: Date.now(),
