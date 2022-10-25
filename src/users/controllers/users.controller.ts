@@ -14,20 +14,13 @@ import { CreateUserDto } from '../dto/CreateUser.dto';
 @Controller('users')
 export class UsersController {
   // inject user service to user controller
-  constructor(private userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Post('/create')
   async createUser(@Body() userData: CreateUserDto) {
     // process the supplied data to the service
-    const createdUserData = await this.userService.createOneUserAccount(
-      userData,
-    );
 
-    return {
-      success: true,
-      message: 'User is created successfully!',
-      body: createdUserData,
-    };
+    return await this.userService.createOneUserAccount(userData);
   }
 
   @Get()
