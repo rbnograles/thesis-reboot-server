@@ -1,7 +1,6 @@
 import { MongooseModule } from '@nestjs/mongoose';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -9,7 +8,6 @@ import { UsersModule } from './users/users.module';
     ConfigModule.forRoot({ envFilePath: '.dev.env' }),
     MongooseModule.forRoot(process.env.DB_URI),
     UsersModule,
-    AuthenticationModule,
   ],
   controllers: [],
   providers: [],

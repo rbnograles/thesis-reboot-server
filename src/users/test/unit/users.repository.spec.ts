@@ -1,9 +1,10 @@
-import { userStub } from './stubs/user.stub';
-import { User } from './../schemas/user.schema';
+import { UserDocument } from './../../schemas/user.schema';
+import { userStub } from '../stubs/user.stub';
+import { User } from '../../schemas/user.schema';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserRepository } from '../users.repository';
+import { UserRepository } from '../../users.repository';
 import { getModelToken } from '@nestjs/mongoose';
-import { UserModel } from './support/user.model';
+import { UserModel } from '../support/user.model';
 import mongoose from 'mongoose';
 
 describe('UsersRepository', () => {
@@ -40,7 +41,7 @@ describe('UsersRepository', () => {
 
   describe('findOne', () => {
     describe('when findOne is called', () => {
-      let user: User;
+      let user: UserDocument | null;
 
       beforeEach(async () => {
         // set up spy for  userModel
@@ -60,7 +61,7 @@ describe('UsersRepository', () => {
 
   describe('find', () => {
     describe('when find is called', () => {
-      let users: User[];
+      let users: UserDocument[] | null;
 
       beforeEach(async () => {
         // set up spy for  userModel
