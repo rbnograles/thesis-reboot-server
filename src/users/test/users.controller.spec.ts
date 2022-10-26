@@ -4,6 +4,7 @@ import { UsersService } from '../users.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from '../users.controller';
 import { userStub } from './stubs/user.stub';
+import mongoose from 'mongoose';
 
 jest.mock('../users.service.ts');
 
@@ -43,7 +44,7 @@ describe('UsersController', () => {
         user = await controller.createUser(createUserDto);
       });
 
-      test('then it should call userService', async () => {
+      test('then it should call userService => createOneUserAccount', async () => {
         expect(await service.createOneUserAccount).toHaveBeenCalledWith(
           createUserDto,
         );
@@ -63,12 +64,31 @@ describe('UsersController', () => {
         users = await controller.getUsers();
       });
 
-      test('then it should call the userService', async () => {
+      test('then it should call the userService => fetchUsers', async () => {
         expect(await service.fetchUsers).toHaveBeenLastCalledWith();
       });
 
       test('then it should return a user', () => {
         expect(users).toEqual([userStub()]);
+      });
+    });
+  });
+
+  describe('getOneUser', () => {
+    describe('when getOneUser is called', () => {
+      let user: User;
+      const _id: string = new mongoose.Types.ObjectId().toString();
+
+      beforeEach(async () => {
+        user = await controller.getOneUser(_id);
+      });
+
+      test('then it should call the userService => fetchOneUser', async () => {
+        expect(await service.fetchOneUser).toHaveBeenLastCalledWith(_id);
+      });
+
+      test('then it should return a user', () => {
+        expect(user).toEqual(userStub());
       });
     });
   });
