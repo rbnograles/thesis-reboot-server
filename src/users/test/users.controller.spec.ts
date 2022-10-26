@@ -12,6 +12,7 @@ jest.mock('../users.service.ts');
 describe('UsersController', () => {
   let controller: UsersController;
   let service: UsersService;
+  let filterQuery: string;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,6 +23,8 @@ describe('UsersController', () => {
 
     controller = module.get<UsersController>(UsersController);
     service = module.get<UsersService>(UsersService);
+    filterQuery = new mongoose.Types.ObjectId().toString();
+    // clear mocks after every execution
     jest.clearAllMocks();
   });
 
@@ -90,14 +93,14 @@ describe('UsersController', () => {
   describe('getOneUser', () => {
     describe('when getOneUser is called', () => {
       let user: User;
-      const _id: string = new mongoose.Types.ObjectId().toString();
-
       beforeEach(async () => {
-        user = await controller.getOneUser(_id);
+        user = await controller.getOneUser(filterQuery);
       });
 
       test('then it should call the userService => fetchOneUser', async () => {
-        expect(await service.fetchOneUser).toHaveBeenLastCalledWith(_id);
+        expect(await service.fetchOneUser).toHaveBeenLastCalledWith(
+          filterQuery,
+        );
       });
 
       test('then it should return a user', () => {
@@ -111,7 +114,6 @@ describe('UsersController', () => {
    */
   describe('updateUser', () => {
     describe('when updateUser is called', () => {
-      const _id: string = new mongoose.Types.ObjectId().toString();
       let updateUserDto: UpdateUserDto;
       let user: User;
 
@@ -123,12 +125,12 @@ describe('UsersController', () => {
           isVerified: userStub().isVerified,
         };
 
-        user = await controller.updateUser(_id, updateUserDto);
+        user = await controller.updateUser(filterQuery, updateUserDto);
       });
 
       test('then it should call the userService => findOneAndUpdate', async () => {
         expect(await service.findOneAndUpdate).toHaveBeenCalledWith(
-          _id,
+          filterQuery,
           updateUserDto,
         );
       });
