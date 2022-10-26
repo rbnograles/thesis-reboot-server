@@ -24,10 +24,16 @@ describe('UsersController', () => {
     jest.clearAllMocks();
   });
 
+  /**
+   * Default Testing if the controller is defined
+   */
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
+  /**
+   * Testing for creating a user
+   */
   describe('createUser', () => {
     describe('when createUser is called', () => {
       let user: User;
@@ -56,6 +62,9 @@ describe('UsersController', () => {
     });
   });
 
+  /**
+   * Testing for get many users
+   */
   describe('getUsers', () => {
     describe('when getUsers is called', () => {
       let users: User[];
@@ -74,6 +83,9 @@ describe('UsersController', () => {
     });
   });
 
+  /**
+   * Testing for get one user
+   */
   describe('getOneUser', () => {
     describe('when getOneUser is called', () => {
       let user: User;
