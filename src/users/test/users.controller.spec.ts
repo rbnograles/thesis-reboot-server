@@ -5,6 +5,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from '../users.controller';
 import { userStub } from './stubs/user.stub';
 import mongoose from 'mongoose';
+import { UpdateUserDto } from '../dto/UpdateUser.dto';
 
 jest.mock('../users.service.ts');
 
@@ -100,6 +101,39 @@ describe('UsersController', () => {
       });
 
       test('then it should return a user', () => {
+        expect(user).toEqual(userStub());
+      });
+    });
+  });
+
+  /**
+   * Testing for updating a single user
+   */
+  describe('updateUser', () => {
+    describe('when updateUser is called', () => {
+      const _id: string = new mongoose.Types.ObjectId().toString();
+      let updateUserDto: UpdateUserDto;
+      let user: User;
+
+      beforeEach(async () => {
+        updateUserDto = {
+          mobileNumber: userStub().mobileNumber,
+          userHealthStatus: userStub().userHealthStatus,
+          userType: userStub().userType,
+          isVerified: userStub().isVerified,
+        };
+
+        user = await controller.updateUser(_id, updateUserDto);
+      });
+
+      test('then it should call the userService => findOneAndUpdate', async () => {
+        expect(await service.findOneAndUpdate).toHaveBeenCalledWith(
+          _id,
+          updateUserDto,
+        );
+      });
+
+      test('then it should return the updated user', () => {
         expect(user).toEqual(userStub());
       });
     });
