@@ -54,4 +54,22 @@ describe('UsersController', () => {
       });
     });
   });
+
+  describe('getUsers', () => {
+    describe('when getUsers is called', () => {
+      let users: User[];
+
+      beforeEach(async () => {
+        users = await controller.getUsers();
+      });
+
+      test('then it should call the userService', async () => {
+        expect(await service.fetchUsers).toHaveBeenLastCalledWith();
+      });
+
+      test('then it should return a user', () => {
+        expect(users).toEqual([userStub()]);
+      });
+    });
+  });
 });

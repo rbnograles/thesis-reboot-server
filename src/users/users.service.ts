@@ -1,3 +1,4 @@
+import { UpdateUserDto } from './dto/UpdateUser.dto';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from './schemas/user.schema';
@@ -15,18 +16,15 @@ export class UsersService {
    */
   createOneUserAccount = async (data: CreateUserDto): Promise<User> => {
     const mobileNumber = data.mobileNumber;
-    const isUserExisting = await this.userRepository.findOne({
-      mobileNumber,
-    });
-    console.log(isUserExisting);
-    if (isUserExisting !== null)
-      throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
+    console.log(mobileNumber);
+    // check if user is existing
+    await this.checkIfUserIsExisting('mobileNumber', mobileNumber);
 
     return this.userRepository.create(data);
   };
 
   /**
-   *
+   * Get all User Records
    * @returns Array of Objects with typeOf User
    */
   fetchUsers = async (): Promise<Array<User>> => {
@@ -34,7 +32,7 @@ export class UsersService {
   };
 
   /**
-   *
+   * Get one User record based on the supplier _id
    * @param id
    * @returns an Object with typeOf User
    */
@@ -44,5 +42,41 @@ export class UsersService {
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
+  };
+
+  /**
+   * Checks if the user is existing or not
+   * throws a BAD_REQUEST status if the user exist
+   * @param args : string
+   * pass any unique identified which belongs to UserSchema
+   * @returns boolean
+   */
+  checkIfUserIsExisting = async (
+    key: string,
+    args: string,
+  ): Promise<boolean> => {
+    // construct a dynamic object to cater dynamic field query
+    const query = {};
+    query[key] = args;
+
+    const result = await this.userRepository.findOne(query);
+
+    if (result !== null)
+      throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
+
+    return true;
+  };
+
+  /**
+   * Update fields of User Object
+   * @param _id mongoose.Schema.Types.ObjectId
+   * @param newUserData : UpdateUserDtp
+   * @returns Object of type User
+   */
+  findOneAndUpdate = async (
+    _id: string,
+    newUserData: UpdateUserDto,
+  ): Promise<User> => {
+    return this.userRepository.findOneAndUpdate({ _id }, newUserData);
   };
 }

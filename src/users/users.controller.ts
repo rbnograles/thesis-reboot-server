@@ -1,3 +1,4 @@
+import { UpdateUserDto } from './dto/UpdateUser.dto';
 import {
   Body,
   Controller,
@@ -6,6 +7,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './schemas/user.schema';
@@ -36,5 +38,13 @@ export class UsersController {
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 
     return user;
+  }
+
+  @Put('/update/:id')
+  async updateUser(
+    @Param('id') id: string,
+    @Body() userData: UpdateUserDto,
+  ): Promise<User> {
+    return this.userService.findOneAndUpdate(id, userData);
   }
 }
