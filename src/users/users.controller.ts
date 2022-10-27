@@ -46,6 +46,9 @@ export class UsersController {
     @Param('id') id: string,
     @Body() userData: UpdateUserDto,
   ): Promise<User> {
-    return await this.userService.findOneAndUpdate(id, userData);
+    const user = await this.userService.findOneAndUpdate(id, userData);
+    if (user === null)
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    return user;
   }
 }
