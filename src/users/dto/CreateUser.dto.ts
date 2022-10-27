@@ -31,5 +31,6 @@ export class CreateUserDto {
     default: 'Member',
     required: false,
   })
+  @IsString()
   userType: string;
 }
