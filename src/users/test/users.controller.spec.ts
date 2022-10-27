@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
-import { CreateUserDto } from '../../dto/CreateUser.dto';
-import { User } from '../../schemas/user.schema';
-import { UsersService } from '../../users.service';
+import { CreateUserDto } from '../dto/CreateUser.dto';
+import { User } from '../schemas/user.schema';
+import { UsersService } from '../users.service';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersController } from '../../users.controller';
-import { userStub } from '../stubs/user.stub';
-import { UpdateUserDto } from '../../dto/UpdateUser.dto';
+import { UsersController } from '../users.controller';
+import { userStub } from './stubs/user.stub';
+import { UpdateUserDto } from '../dto/UpdateUser.dto';
 
-jest.mock('../../users.service.ts');
+jest.mock('../users.service.ts');
 
 describe('UsersController', () => {
   let controller: UsersController;

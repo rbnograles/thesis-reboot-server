@@ -1,10 +1,10 @@
-import { UserDocument } from './../../schemas/user.schema';
-import { userStub } from '../stubs/user.stub';
-import { User } from '../../schemas/user.schema';
+import { UserDocument } from '../schemas/user.schema';
+import { userStub } from './stubs/user.stub';
+import { User } from '../schemas/user.schema';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserRepository } from '../../users.repository';
+import { UserRepository } from '../users.repository';
 import { getModelToken } from '@nestjs/mongoose';
-import { UserModel } from '../support/user.model';
+import { UserModel } from './support/user.model';
 import mongoose from 'mongoose';
 
 describe('UsersRepository', () => {
@@ -50,7 +50,7 @@ describe('UsersRepository', () => {
       });
 
       test('then it should call the userModel => findOne', () => {
-        expect(model.findOne).toHaveBeenCalledWith(query, { _id: 0, __v: 0 });
+        expect(model.findOne).toHaveBeenCalledWith(query, {});
       });
 
       test('then it should return a user', () => {

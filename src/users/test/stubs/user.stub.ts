@@ -5,7 +5,7 @@ export const userStub = (): User => {
     mobileNumber: '+619516186637',
     userHealthStatus: 'string',
     isVerified: false,
-    createdAt: expect.any(Number),
+    createdAt: 1666831602192,
     userType: 'Member',
   };
 };

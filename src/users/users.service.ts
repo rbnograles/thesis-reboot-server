@@ -20,7 +20,7 @@ export class UsersService {
     // check if user is existing
     await this.checkIfUserIsExisting('mobileNumber', mobileNumber);
 
-    return this.userRepository.create(data);
+    return await this.userRepository.create(data);
   };
 
   /**
@@ -28,7 +28,7 @@ export class UsersService {
    * @returns Array of Objects with typeOf User
    */
   fetchUsers = async (): Promise<Array<User>> => {
-    return this.userRepository.find({});
+    return await this.userRepository.find({});
   };
 
   /**
@@ -36,12 +36,8 @@ export class UsersService {
    * @param id
    * @returns an Object with typeOf User
    */
-  fetchOneUser = async (id: string): Promise<User> => {
-    try {
-      return this.userRepository.findOne({ id });
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-    }
+  fetchOneUser = async (_id: string): Promise<User> => {
+    return await this.userRepository.findOne({ _id });
   };
 
   /**
@@ -77,6 +73,6 @@ export class UsersService {
     _id: string,
     newUserData: UpdateUserDto,
   ): Promise<User> => {
-    return this.userRepository.findOneAndUpdate({ _id }, newUserData);
+    return await this.userRepository.findOneAndUpdate({ _id }, newUserData);
   };
 }
