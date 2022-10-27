@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNotEmpty } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 export class CreateUserDto {
   @ApiProperty({
     required: true,
   })
   @IsNotEmpty({ message: 'Mobile number should not be empty' })
+  @IsString()
   mobileNumber: string;
 
   @ApiProperty({

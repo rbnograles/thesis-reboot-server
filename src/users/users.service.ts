@@ -16,7 +16,6 @@ export class UsersService {
    */
   createOneUserAccount = async (data: CreateUserDto): Promise<User> => {
     const mobileNumber = data.mobileNumber;
-    console.log(mobileNumber);
     // check if user is existing
     await this.checkIfUserIsExisting('mobileNumber', mobileNumber);
 
