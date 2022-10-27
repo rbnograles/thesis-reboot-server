@@ -1,5 +1,5 @@
 import { DataBaseService } from '../src/db/db.service';
-import { Connection } from 'mongoose';
+import mongoose, { Connection } from 'mongoose';
 import { userStub } from './../src/users/test/stubs/user.stub';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
@@ -28,7 +28,7 @@ describe('UsersController (e2e)', () => {
     await connection.collection('users').deleteMany({});
   });
 
-  describe('(POST) ', () => {
+  describe('(POST) /users/create', () => {
     const CREATE_API = '/users/create';
 
     it('should create a new user', async () => {
@@ -79,7 +79,7 @@ describe('UsersController (e2e)', () => {
     });
   });
 
-  describe('(GET ALL)', () => {
+  describe('(GET ALL) /users', () => {
     const GET_API = '/users';
 
     beforeEach(async () => {
@@ -95,6 +95,88 @@ describe('UsersController (e2e)', () => {
         .get(GET_API)
         .expect((res) => {
           expect(res.body).toMatchObject([userStub()]);
+        });
+    });
+  });
+
+  describe('(GET ONE) /users/:id', () => {
+    const GET_API = '/users';
+    const randomId: string = new mongoose.Types.ObjectId().toString();
+    const NOT_FOUND = 'User not found';
+    let _id: string;
+
+    beforeEach(async () => {
+      const res = await connection.collection('users').insertOne(userStub());
+      _id = res.insertedId.toString();
+    });
+
+    it('should return 200', () => {
+      return request(app.getHttpServer()).get(`${GET_API}/${_id}`).expect(200);
+    });
+
+    it('should return with a user object', () => {
+      return request(app.getHttpServer())
+        .get(`${GET_API}/${_id}`)
+        .expect((res) => {
+          expect(res.body).toEqual({
+            ...userStub(),
+            _id: _id,
+          });
+        });
+    });
+
+    it('should return a 404 if the user does not exist', () => {
+      return request(app.getHttpServer())
+        .get(`${GET_API}/${randomId}`)
+        .expect(404)
+        .expect((res) => {
+          expect(res.body.message).toEqual(NOT_FOUND);
+        });
+    });
+  });
+
+  describe('(PUT) /users/update/:id', () => {
+    const PUT_API = '/users/update';
+    const randomId: string = new mongoose.Types.ObjectId().toString();
+    const NOT_FOUND = 'User not found';
+    let _id: string;
+
+    beforeEach(async () => {
+      const res = await connection.collection('users').insertOne(userStub());
+      _id = res.insertedId.toString();
+    });
+
+    it('should return a 200 with the updated data', () => {
+      return request(app.getHttpServer())
+        .put(`${PUT_API}/${_id}`)
+        .send(userStub())
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).toEqual({
+            ...userStub(),
+            _id: _id,
+          });
+        });
+    });
+
+    it('it should return a 404 if the user is not found', () => {
+      return request(app.getHttpServer())
+        .put(`${PUT_API}/${randomId}`)
+        .send(userStub())
+        .expect(404)
+        .expect((res) => {
+          expect(res.body.message).toEqual(NOT_FOUND);
+        });
+    });
+
+    it('should return a 400 if payload is empty', () => {
+      return request(app.getHttpServer())
+        .put(`${PUT_API}/${_id}`)
+        .send({})
+        .expect(400)
+        .expect((res) => {
+          expect(res.body.message.length).toEqual(8);
+          expect(res.body.error).toEqual('Bad Request');
         });
     });
   });
