@@ -1,12 +1,12 @@
-import { MongooseModule } from '@nestjs/mongoose';
-import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
+import { DataBaseModule } from './db/db.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: '.dev.env' }),
-    MongooseModule.forRoot(process.env.DB_URI),
+    ConfigModule.forRoot({ envFilePath: '.dev.env', isGlobal: true }),
+    DataBaseModule,
     UsersModule,
   ],
   controllers: [],
