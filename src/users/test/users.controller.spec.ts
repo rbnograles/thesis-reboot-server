@@ -1,3 +1,4 @@
+import { HttpException } from '@nestjs/common';
 import mongoose from 'mongoose';
 import { CreateUserDto } from '../dto/CreateUser.dto';
 import { User } from '../schemas/user.schema';
@@ -101,6 +102,7 @@ describe('UsersController', () => {
   describe('getOneUser', () => {
     describe('when getOneUser is called', () => {
       let user: User;
+
       beforeEach(async () => {
         user = await controller.getOneUser(filterQuery);
       });
@@ -113,6 +115,18 @@ describe('UsersController', () => {
 
       test('then it should return a user', () => {
         expect(user).toEqual(userStub());
+      });
+
+      test('then it should throw an error if user is null', async () => {
+        // return a null value from the service
+        jest.spyOn(service, 'fetchOneUser').mockReturnValue(null);
+
+        try {
+          await controller.getOneUser(filterQuery);
+        } catch (error) {
+          expect(error).toBeInstanceOf(HttpException);
+          expect(error.message).toBe('User not found');
+        }
       });
     });
   });
@@ -145,6 +159,18 @@ describe('UsersController', () => {
 
       test('then it should return the updated user', () => {
         expect(user).toEqual(userStub());
+      });
+
+      test('then it should throw an error if user is null', async () => {
+        // return a null value from the service
+        jest.spyOn(service, 'findOneAndUpdate').mockReturnValue(null);
+
+        try {
+          await controller.updateUser(filterQuery, updateUserDto);
+        } catch (error) {
+          expect(error).toBeInstanceOf(HttpException);
+          expect(error.message).toBe('User not found');
+        }
       });
     });
   });

@@ -47,8 +47,10 @@ export class UsersController {
     @Body() userData: UpdateUserDto,
   ): Promise<User> {
     const user = await this.userService.findOneAndUpdate(id, userData);
+
     if (user === null)
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+
     return user;
   }
 }
