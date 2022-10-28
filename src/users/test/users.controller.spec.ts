@@ -31,8 +31,16 @@ describe('UsersController', () => {
   /**
    * Default Testing if the controller is defined
    */
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('variables must be defined', () => {
+    it('controller should be defined', () => {
+      expect(controller).toBeDefined();
+    });
+    it('service should be defined', () => {
+      expect(service).toBeDefined();
+    });
+    it('filterQuery should be defined', () => {
+      expect(filterQuery).toBeDefined();
+    });
   });
 
   /**
