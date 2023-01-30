@@ -40,6 +40,18 @@ export class UsersService {
   };
 
   /**
+   * Get one user based on the mobile number
+   * This method is usually for authentication only
+   * Do not use this for any queries, Use the fetchOneUser with a mongoDB id param
+   * return an array of results
+   */
+  fetchOneByMobileNumber = async (
+    mobileNumber: string,
+  ): Promise<Array<User>> => {
+    return await this.userRepository.find({ mobileNumber });
+  };
+
+  /**
    * Checks if the user is existing or not
    * throws a BAD_REQUEST status if the user exist
    * @param args : string

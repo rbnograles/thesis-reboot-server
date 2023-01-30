@@ -59,6 +59,7 @@ describe('UsersController', () => {
           userType: userStub().userType,
           isVerified: userStub().isVerified,
           createdAt: userStub().createdAt,
+          password: userStub().password,
         };
         user = await controller.createUser(createUserDto);
       });
@@ -145,6 +146,7 @@ describe('UsersController', () => {
           userHealthStatus: userStub().userHealthStatus,
           userType: userStub().userType,
           isVerified: userStub().isVerified,
+          password: userStub().password,
         };
 
         user = await controller.updateUser(filterQuery, updateUserDto);
