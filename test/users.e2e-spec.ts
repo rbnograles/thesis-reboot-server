@@ -175,7 +175,7 @@ describe('UsersController (e2e)', () => {
         .send({})
         .expect(400)
         .expect((res) => {
-          expect(res.body.message.length).toEqual(8);
+          expect(res.body.message.length).toEqual(10); // number of error returns
           expect(res.body.error).toEqual('Bad Request');
         });
     });

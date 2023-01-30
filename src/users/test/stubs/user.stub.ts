@@ -7,5 +7,6 @@ export const userStub = (): User => {
     isVerified: false,
     createdAt: 1666831602192,
     userType: 'Member',
+    password: 'password',
   };
 };

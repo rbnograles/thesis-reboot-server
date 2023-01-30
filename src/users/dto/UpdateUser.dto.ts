@@ -23,4 +23,9 @@ export class UpdateUserDto {
   @IsNotEmpty({ message: 'User type should not be empty' })
   @IsString({ message: 'User type should be a string' })
   userType: string;
+
+  @ApiProperty()
+  @IsNotEmpty({ message: 'Password should not be empty' })
+  @IsString({ message: 'Password should be a string' })
+  password: string;
 }
