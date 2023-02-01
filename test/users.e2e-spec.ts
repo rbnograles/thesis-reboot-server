@@ -39,6 +39,7 @@ describe('UsersController (e2e)', () => {
         .expect((res) => {
           expect(res.body).toEqual({
             ...userStub(),
+            password: expect.any(String),
             __v: expect.any(Number),
             _id: expect.any(String),
           });

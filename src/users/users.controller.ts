@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcryptjs';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
 import {
   Body,
@@ -20,8 +21,12 @@ export class UsersController {
 
   @Post('/create')
   async createUser(@Body() userData: CreateUserDto): Promise<User> {
+    // has the password
+    // salt = 12
+    const newPass = bcrypt.hashSync(userData.password, 12);
+    const newUserData = { ...userData, password: newPass };
     // process the supplied data to the service
-    return await this.userService.createOneUserAccount(userData);
+    return await this.userService.createOneUserAccount(newUserData);
   }
 
   @Get()

@@ -65,9 +65,10 @@ describe('UsersController', () => {
       });
 
       test('then it should call userService => createOneUserAccount', async () => {
-        expect(await service.createOneUserAccount).toHaveBeenCalledWith(
-          createUserDto,
-        );
+        expect(await service.createOneUserAccount).toHaveBeenCalledWith({
+          ...createUserDto,
+          password: expect.any(String),
+        });
       });
 
       test('then it should return a user', () => {
